@@ -114,7 +114,7 @@ export default class RegisterScreen extends React.Component {
     return (
       <SafeAreaView style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff'}}>
         <ImageBackground
-          style={{width: '100%', height: 120, marginBottom: 40, justifyContent: 'center', alignItems: 'center'}}
+          style={{width: '100%', height: 120, marginBottom: 20, justifyContent: 'center', alignItems: 'center'}}
           source={require('../../assets/apple-background-create.jpg')}>
           <Text
             style={{fontFamily: 'System', fontSize: 32, color: '#fff'}}>Create Your Apple ID</Text>

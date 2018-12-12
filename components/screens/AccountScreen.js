@@ -39,6 +39,19 @@ export default class AccountScreen extends React.Component {
     }
   }
 
+  constructor(props)
+  {
+    super(props);
+    console.disableYellowBox = true;
+    this.state = {
+      name: null,
+      id: null,
+      shortname: null,
+      image: '',
+      isloading: false
+    }
+  }
+
   uploadImage(uri, mime = 'image/jpg') {
     console.log("asdasd")
     return new Promise((resolve, reject) => {
@@ -58,7 +71,17 @@ export default class AccountScreen extends React.Component {
           uploadBlob.close()
           return imageRef.getDownloadURL()
         })
-        .then((url) => {
+        .then(async (url) => {
+          console.log(url)
+          var user = await AsyncStorage.getItem('@user:key')
+          firebaseApp.database().ref('shopapp/list_User/').once('value', (childSnapshot) => {
+            childSnapshot.forEach((child) => {
+              if (child.val().id === user)
+              {
+                firebaseApp.database().ref('shopapp/list_User/' + child.key + '/image/').set(url)
+              }
+          })
+          })
           resolve(url)
         })
         .catch((error) => {
@@ -80,28 +103,17 @@ export default class AccountScreen extends React.Component {
             name: child.val().firstname + ' ' + child.val().lastname,
             id: child.val().id,
             image: child.val().image,
-            shortname: child.val().firstname[0] + child.val().lastname[0]
+            shortname: child.val().firstname[0] + child.val().lastname[0],
+            isloading: true
           })
         }
       })
     })
   }
 
-  componentWillMount()
+  componentDidMount()
   {
     this.loadData()
-  }
-
-  constructor(props)
-  {
-    super(props);
-    console.disableYellowBox = true;
-    this.state = {
-      name: null,
-      id: null,
-      shortname: null,
-      image: ''
-    }
   }
 
   _signOut = async() => {
@@ -143,44 +155,18 @@ export default class AccountScreen extends React.Component {
                       } else if (response.error) {
                         console.log('ImagePicker Error: ', response.error);
                       } else {
-                        var user = await AsyncStorage.getItem('@user:key')
-                        firebaseApp.database().ref('shopapp/list_User/').once('value', (childSnapshot) => {
-                          childSnapshot.forEach((child) => {
-                            if (child.val().id === user)
-                            {
-                              firebaseApp.database().ref('shopapp/list_User/' + child.key + '/image/').set(response.uri)
-                            }
-                          })
-                        }).then(() => {
-                          this.loadData()
+                        this.uploadImage(response.uri)
+                        this.setState({
+                          image: response.uri
                         })
                       }
                     });
                   }}>
                   <Image
                     style={{width: 80, height: 80, borderRadius: 40}}
-                    source={this.state.image != '' ? {uri: this.state.image} : {uri: 'https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?201606271147'}}>
+                    source={this.state.image != '' ? {uri: this.state.image} : require('../../assets/icon-apple.png')}>
                   </Image>
                 </TouchableWithoutFeedback>
-                {/* <View
-                  style={{width: 80, height: 80, borderRadius: 40, backgroundColor: '#666', alignItems: 'center', justifyContent: 'center'}}>
-                  <Text
-                    onPress={() => {
-                      ImagePickerIOS.openSelectDialog({}, imageUri => {
-                        this.setState({
-                          image: imageUri
-                        })
-                        console.log(imageUri);
-                      }, error => {console.log(error)});
-                      ImagePickerIOS.openCameraDialog({}, imageUri => {
-                        this.setState({
-                          image: imageUri
-                        })
-                        console.log(imageUri);
-                      }, error => {console.log(error)});
-                    }}
-                    style={{fontFamily: 'System', fontSize: 28}}>{this.state.shortname}</Text>
-                </View> */}
                 <View
                   style={{marginLeft: 10, flexDirection: 'column'}}>
                   <Text

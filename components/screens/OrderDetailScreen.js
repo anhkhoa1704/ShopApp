@@ -28,6 +28,7 @@ export default class OrderDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return{
       headerTitle: 'Order Detail',
+      tabBarVisible: false,
     }
   };
   

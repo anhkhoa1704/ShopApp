@@ -4,7 +4,7 @@ import firebaseApp from '../../config-firebase';
 
 let widthDV = Dimensions.get('window').width;
 
-export default class ProductTypeScreen extends React.Component {
+export default class ProductTypeScreen extends Component {
 
   constructor(props)
   {
@@ -52,6 +52,7 @@ export default class ProductTypeScreen extends React.Component {
         })
       })
     })
+    console.log(list_ProductType)
   }
 
   writeData() {

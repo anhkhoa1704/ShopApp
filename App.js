@@ -12,6 +12,9 @@ import ShopScreen from './components/screens/ShopScreen'
 import SearchScreen from './components/screens/SearchScreen'
 import BagScreen from './components/screens/BagScreen'
 import CheckOutScreen from './components/screens/CheckOutScreen'
+import StoreScreen from './components/screens/StoreScreen'
+import StoreDetailScreen from './components/screens/StoreDetailScreen'
+import StoreMapScreen from './components/screens/StoreMapScreen'
 import MacProductScreen from './components/screens/ProductScreen/MacProductScreen'
 import iPhoneProductScreen from './components/screens/ProductScreen/iPhoneProductScreen'
 import iPhoneXScreen from './components/screens/ProductScreen/iPhoneScreens/iPhoneXScreen'
@@ -568,6 +571,32 @@ let BagStackStyleConfigs = {
 
 const BagStackNavigation = StackNavigator(BagStackRouteConfigs, BagStackStyleConfigs)
 
+let StoreStackRouteConfigs = {
+  StoreHome: {
+    screen: StoreScreen,
+  },
+  StoreDetail: {
+    screen: StoreDetailScreen,
+  },
+  StoreMap: {
+    screen: StoreMapScreen
+  }
+}
+
+let StoreStackStyleConfigs = {
+  initialRouteName: 'StoreHome',
+  navigationOptions: {
+    tabBarIcon: ({ tintColor }) => {
+      return <Image
+        source={require('./assets/icon-store.png')}
+        style={{width: 25, height: 25, tintColor: tintColor}}>
+      </Image>
+    },
+  },
+}
+
+const StoreStackNavigation = StackNavigator(StoreStackRouteConfigs, StoreStackStyleConfigs)
+
 let TabNavigationRouteConfigs = {
   Home: { 
     screen: DiscoverStackNavigation
@@ -578,9 +607,12 @@ let TabNavigationRouteConfigs = {
   Search: { 
     screen: SearchStackNavigation 
   },
+  Store: {
+    screen: StoreStackNavigation
+  },
   Bag: { 
     screen: BagStackNavigation 
-  },
+  }
 }
 
 let TabNavigatorStyleConfigs = {

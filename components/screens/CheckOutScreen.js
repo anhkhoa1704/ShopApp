@@ -168,7 +168,7 @@ export default class CheckOutScreen extends React.Component {
             </View>
           </View>
           <View
-            style={{marginTop: 4, backgroundColor: 'white'}}>
+            style={{marginTop: 4, backgroundColor: 'white', marginBottom: 180}}>
             <Text
               style={{marginLeft: 20, fontFamily: 'System', fontSize: 16, color: 'blue', marginVertical: 10}}>Shipping Address</Text>
             <View

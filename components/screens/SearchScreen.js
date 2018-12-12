@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Image, Dimensions, SafeAreaView, Alert, ScrollView, TouchableWithoutFeedback, FlatList, Keyboard, TouchableHighlight, AsyncStorage } from 'react-native';
-import { SearchBar, Icon } from 'react-native-elements'
+import { SearchBar } from 'react-native-elements'
 import firebaseApp from '../../config-firebase'
 
 let dvWidth = Dimensions.get('window').width;
